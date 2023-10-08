@@ -1,0 +1,153 @@
+/* this is the container for comments */
+.comments-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e1e1;
+}
+
+/* styling for comments */
+.comments {
+  padding: 0;
+}
+
+/* list styling for comments */
+.comment-list {
+  list-style-type: none; /* no bullet points */
+  margin: 0;
+}
+
+/* individual comment styling */
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* remove the border for the last comment */
+.comment:last-child {
+  border-bottom: none;
+}
+
+/* metadata for comments */
+.comment-metadata {
+  flex: 1;
+  color: #666;
+}
+
+/* styling for comment author */
+.comment_author {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/* styling for comment date */
+.comment_date {
+  font-size: 0.875em;
+}
+
+/* styling for comment content */
+.comment_content {
+  flex: 2;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* delete comment icon styling */
+.delete-comment-icon {
+  cursor: pointer;
+  background-image: url("../media/delete-comment-icon.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* enlarge the delete comment icon on hover */
+.delete-comment-icon:hover {
+  transform: scale(1.1);
+}
+
+/* navigation buttons for comments */
+.comment-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* styling for previous and next comment buttons (same row) */
+.comment-previous-next-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px; /* add margin for spacing */
+}
+
+/* styling for previous comment button (left-aligned) */
+.previous-comments-icon {
+  background-image: url("../media/previous-comments-icon.png");
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* enlarge the previous comment button on hover */
+.previous-comments-icon:hover {
+  transform: scale(1.1);
+}
+
+/* styling for next comment button (right-aligned) */
+.next-comments-icon {
+  background-image: url("../media/next-comments-icon.png");
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  margin-left: auto; /* align to the far right */
+}
+
+/* enlarge the next comment button on hover */
+.next-comments-icon:hover {
+  transform: scale(1.1);
+}
+
+/* styling for the add comment form */
+.add-comment-form {
+  margin-top: 20px;
+}
+
+/* styling for input fields in the add comment form */
+.add-comment-form input[type='text'] {
+  width: 75%;
+  padding: 5px;
+  border: 1px solid #ccc; /* slightly darker border */
+  border-radius: 3px;
+}
+
+/* styling for the submit button in the add comment form */
+.add-comment-form button {
+  width: 20%;
+  border: none;
+  padding: 5px;
+  background-color: #888;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* darken the submit button background on hover */
+.add-comment-form button:hover {
+  background-color: #444;
+}

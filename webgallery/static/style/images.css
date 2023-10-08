@@ -1,0 +1,169 @@
+/* image-container styling */
+.image-container {
+  display: flex;
+  flex-direction: column; /* stack items vertically */
+  justify-content: center;
+  align-items: center; /* center items horizontally */
+  border: 1px solid #ccc; /* add a border */
+  margin: 10px;
+  padding: 10px;
+  background-color: #f9f9f9; /* background color */
+}
+
+/* title styling */
+.image_title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px; /* margin at the bottom */
+  text-align: center; /* center text */
+}
+
+/* author styling */
+.image_author {
+  font-style: italic;
+  color: #666; /* set text color to a kind of gray */
+  text-align: center;
+}
+
+/* image URL styling */
+.image_picture {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  margin-left: auto; /* Center horizontal */
+  margin-right: auto; /* Center horizontally */
+  border: 2px solid #ccc;
+  padding: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  display: block; 
+  text-align: center; /* Center block container */
+}
+
+
+/* date styling */
+.image_date {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+}
+
+/* buttons container styling */
+.image-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* margin space at the top */
+  width: 100%;
+}
+
+/* previous and next image navigation styling */
+.image-previous-next-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px; /* add margin for spacing */
+}
+
+/* previous image button styling (left-aligned) */
+.previous-image-icon {
+  background-image: url("../media/previous-image-icon.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer; /* change cursor to a pointer on hover */
+}
+
+/* enlarge the previous image button on hover */
+.previous-image-icon:hover {
+  transform: scale(1.1);
+}
+
+/* next image button styling (right-aligned) */
+.next-image-icon {
+  background-image: url("../media/next-image-icon.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  margin-left: auto; /* align to the far right */
+}
+
+/* enlarge the next image button on hover */
+.next-image-icon:hover {
+  transform: scale(1.1);
+}
+
+/* delete image button styling (center-aligned) */
+.delete-image-icon {
+  background-image: url("../media/delete-image-icon.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  margin-top: 10px; /* add margin for spacing */
+}
+
+/* enlarge the delete image button on hover */
+.delete-image-icon:hover {
+  transform: scale(1.1);
+}
+
+/* button styling */
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  cursor: pointer; /* change cursor to a pointer */
+  border-radius: 4px;
+  border: none;
+}
+
+/* enlarge the button on hover */
+.btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+/* form container styling */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* form title styling */
+.form_title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 30px; /* margin space at the top */
+  margin-bottom: 10px; /* margin space at the bottom */
+}
+
+/* form element styling */
+.form_element {
+  padding: 8px;
+  width: 100%;
+  margin: 5px 0; /* margin space */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.2s; /* add a smooth border color transition */
+}
+
+/* form element focus styling */
+.form_element:focus {
+  border-color: #007bff; /* change border color on focus */
+}
+
+/* hidden element styling */
+.hidden {
+  display: none;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Webgallery</title>
+    <link href="style/main.css" rel="stylesheet" type="text/css" />
+    <link href="style/images.css" rel="stylesheet" type="text/css" />
+    <link href="style/comments.css" rel="stylesheet" type="text/css" />
+    <script type="module" src="js/index.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a href="/" id="title">Webgallery</a>
+    </header>
+
+    <button id="toggle_image_form" class="btn">Toggle Add Image Form</button>
+
+    <form class="complex_form hidden" id="add_image_form" accept="image/*">
+      <div class="form_title">Add an image</div>
+      <input
+        type="text"
+        id="image_title"
+        class="form_element"
+        placeholder="Title"
+        name="image_name"
+        required
+      />
+      <input 
+        type="file" 
+        id="image_picture"
+        class="form_element" 
+        name="image_picture"
+        required 
+      />
+      <input
+        type="text"
+        id="image_author"
+        class="form_element"
+        placeholder="Author"
+        name="image_author"
+        required
+      />
+      <button type="submit" class="btn">Add image</button>
+    </form>
+
+    <div id="image"></div>
+
+    <footer>
+      <a href="/credits.html">credits</a>
+    </footer>
+  </body>
+</html>
