@@ -31,29 +31,14 @@ let comments = new Datastore({
   timestampData: true,
 });
 
-/*  ******* Data types (new to be done code) *******
-    image objects must have at least the following attributes:
-        - (String) _id 
-        - (String) title
-        - (String) author
-        - (String) picture
-        - (Date) date
-
-    comment objects must have the following attributes
-        - (String) _id
-        - (String) imageId
-        - (String) author
-        - (String) content
-        - (Date) date
-
-****************************** */
-
 const upload = multer({ dest: "uploads/" });
 
-// Create
+/* Create */
 
 app.post("/api/images/", upload.single("picture"), function (req, res, next) {
   const { title, author } = req.body;
+  if (!title || !author || !req.file)
+    return res.status(400).end("Missing image information");
   images.insert(
     {
       title,
@@ -93,7 +78,7 @@ app.post("/api/comments/", function (req, res, next) {
   });
 });
 
-// Read
+/* Read */
 
 app.get("/api/images/:id/", function (req, res, next) {
   images.findOne({ _id: req.params.id }, function (err, image) {
@@ -138,7 +123,6 @@ app.get("/api/images/:id/status/isLatest", function (req, res, next) {
     });
 });
 
-// Find the image created directly before the specified image
 app.get("/api/images/:id/previous", function (req, res, next) {
   const imageId = req.params.id;
   images
@@ -147,7 +131,7 @@ app.get("/api/images/:id/previous", function (req, res, next) {
     .exec(function (err, allImages) {
       if (err) return res.status(500).end(err);
       for (let i = 0; i < allImages.length; i++) {
-        if (allImages[i]._id === imageId){
+        if (allImages[i]._id === imageId) {
           if (i === 0) return res.status(404).end("No previous image");
           else return res.json(allImages[i - 1]);
         }
@@ -155,7 +139,6 @@ app.get("/api/images/:id/previous", function (req, res, next) {
     });
 });
 
-// Find the image created directly after the specified image
 app.get("/api/images/:id/next", function (req, res, next) {
   const imageId = req.params.id;
   images
@@ -180,24 +163,17 @@ app.get("/api/comments/:imageId/:page/", function (req, res, next) {
 
   comments
     .find({ imageId: imageId })
-    .sort({ date: -1 })
+    .sort({ createdAt: -1 })
     .exec(function (err, imageComments) {
       if (err) return res.status(500).end("Internal Server Error");
-      if (!imageComments) return res.json([]);
+      if (!imageComments)
+        return res.status(404).end("Image or comments not found");
       const startIndex = page * perPage;
       const endIndex = startIndex + perPage;
       const commentsForPage = imageComments.slice(startIndex, endIndex);
       return res.json(commentsForPage);
     });
 });
-
-// app.get("/api/comments/:imageId/", function (req, res, next) {
-//   comments.find({ imageId: imageId }, function (err, imageComments) {
-//     if (err) return res.status(500).end("Internal Server Error");
-//     if (!imageComments) return res.json([]);
-//     return res.json(imageComments);
-//   });
-// });
 
 app.get("/api/comments/:imageId/:page/isLastPage/", function (req, res, next) {
   const imageId = req.params.imageId;
@@ -216,18 +192,7 @@ app.get("/api/comments/:imageId/:page/isLastPage/", function (req, res, next) {
   });
 });
 
-// for testing purposes, get all images
-app.get("/api/images/", function (req, res, next) {
-  images
-    .find({})
-    .sort({ date: -1 })
-    .exec(function (err, images) {
-      if (err) return res.status(500).end("Internal Server Error");
-      return res.json(images);
-    });
-});
-
-// Delete
+/* Delete */
 
 app.delete("/api/images/:id/", function (req, res, next) {
   images.findOne({ _id: req.params.id }, function (err, image) {
@@ -235,7 +200,7 @@ app.delete("/api/images/:id/", function (req, res, next) {
     if (!image)
       return res
         .status(404)
-        .end("Image id #" + req.params.id + " does not exists");
+        .end("Image with id " + req.params.id + " does not exist");
     images.remove({ _id: image._id }, { multi: false }, function (err, num) {
       if (err) return res.status(500).end(err);
       rmSync(image.picture.path, { recursive: true, force: true });
@@ -258,7 +223,7 @@ app.delete("/api/comments/:id/", function (req, res, next) {
     if (!comment)
       return res
         .status(404)
-        .end("Comment id #" + req.params.id + " does not exists");
+        .end("Comment with id " + req.params.id + " does not exist");
     comments.remove(
       { _id: comment._id },
       { multi: false },
@@ -268,6 +233,8 @@ app.delete("/api/comments/:id/", function (req, res, next) {
     );
   });
 });
+
+/* Testing */
 
 // This is for testing purpose only
 export function createTestDb(db) {
@@ -309,6 +276,8 @@ export function getComments(callback) {
       return callback(err, comments);
     });
 }
+
+/* Server */
 
 export const server = createServer(app).listen(PORT, function (err) {
   if (err) console.log(err);
