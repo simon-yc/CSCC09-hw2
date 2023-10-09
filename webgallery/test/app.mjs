@@ -31,7 +31,7 @@ describe("Image and Comment API Testing", () => {
         .post("/api/images/")
         .field("title", "test-title")
         .field("author", "test-author")
-        .attach("picture", "uploads/test-picture.png")
+        .attach("picture", "test/picture/test-picture.png")
         .end(function (err, res) {
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("title", "test-title");
@@ -90,6 +90,76 @@ describe("Image and Comment API Testing", () => {
         });
     });
 
+    let imageId2;
+    it("should create another image with title, author, and picture", function (done) {
+        chai
+          .request(server)
+          .post("/api/images/")
+          .field("title", "test-title2")
+          .field("author", "test-author2")
+          .attach("picture", "test/picture/test-picture.png")
+          .end(function (err, res) {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property("title", "test-title2");
+            expect(res.body).to.have.property("author", "test-author2");
+            expect(res.body).to.have.property("picture");
+            imageId2 = res.body._id;
+            getImages(function (err, images) {
+              expect(images).to.have.lengthOf(2);
+              done();
+            });
+          });
+      });
+
+      it("should try to retrieve the previous image and succeed", function (done) {
+        chai
+            .request(server)
+            .get(`/api/images/${imageId}/previous`)
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body).to.have.property("_id", imageId2);
+                expect(res.body).to.have.property("title", "test-title2");
+                expect(res.body).to.have.property("author", "test-author2");
+                done();
+            });
+    });
+
+    it("should try to retrieve the previous image and fail", function (done) {
+        chai
+            .request(server)
+            .get(`/api/images/${imageId2}/previous`)
+            .end(function (err, res) {
+                expect(res).to.have.status(404);
+                expect(res.text).to.equal("No previous image");
+                done();
+            });
+    });
+
+    it("should retrieve the next image and succeed", function (done) {
+        chai
+            .request(server)
+            .get(`/api/images/${imageId2}/next`)
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body).to.have.property("_id", imageId);
+                expect(res.body).to.have.property("title", "test-title");
+                expect(res.body).to.have.property("author", "test-author");
+                done();
+            });
+    });
+
+    
+    it("should try to retrieve the next image and fail", function (done) {
+        chai
+            .request(server)
+            .get(`/api/images/${imageId}/next`)
+            .end(function (err, res) {
+                expect(res).to.have.status(404);
+                expect(res.text).to.equal("No next image");
+                done();
+            });
+    });
+
     it("should delete an image", function (done) {
       chai
         .request(server)
@@ -97,11 +167,24 @@ describe("Image and Comment API Testing", () => {
         .end(function (err, res) {
           expect(res).to.have.status(200);
           getImages(function (err, images) {
-            expect(images).to.have.lengthOf(0);
+            expect(images).to.have.lengthOf(1);
             done();
           });
         });
     });
+
+    it("should delete an image", function (done) {
+        chai
+          .request(server)
+          .delete(`/api/images/${imageId2}/`)
+          .end(function (err, res) {
+            expect(res).to.have.status(200);
+            getImages(function (err, images) {
+              expect(images).to.have.lengthOf(0);
+              done();
+            });
+          });
+      });
   });
 
   // Test cases for Comment APIs
@@ -114,7 +197,7 @@ describe("Image and Comment API Testing", () => {
         .post("/api/images/")
         .field("title", "test-title")
         .field("author", "test-author")
-        .attach("picture", "uploads/test-picture.png")
+        .attach("picture", "test/picture/test-picture.png")
         .end(function (err, res) {
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("title", "test-title");
